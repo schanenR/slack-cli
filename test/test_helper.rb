@@ -1,3 +1,7 @@
+require_relative '../lib/builder'
+
+
+
 require 'simplecov'
 SimpleCov.start do
   add_filter 'test/'
