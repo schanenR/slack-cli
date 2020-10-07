@@ -18,4 +18,6 @@ describe "User class" do
     end
   end
 
+
+
 end

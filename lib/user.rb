@@ -1,4 +1,8 @@
+require 'dotenv'
 
+require_relative 'builder'
+
+SLACK_URL = "https://slack.com/api/users.list"
 
 class User < Builder
 
@@ -9,3 +13,4 @@ class User < Builder
   end
 
 end
+
