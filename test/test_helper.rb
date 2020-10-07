@@ -1,5 +1,7 @@
 require_relative '../lib/builder'
-
+require_relative '../lib/workspace'
+require_relative '../lib/user'
+require_relative '../lib/channel'
 
 
 require 'simplecov'
