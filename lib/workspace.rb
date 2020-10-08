@@ -27,6 +27,10 @@ class Workspace
     return "Selected #{current_selection.class}: #{current_selection.name}"
   end
 
+  def show_details
+    return current_selection.details
+  end
+
   private
   def search_names(name)
     selection = []

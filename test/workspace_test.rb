@@ -61,4 +61,17 @@ describe "Workspace class" do
       }.must_raise ArgumentError
     end
   end
+
+  describe "show_details" do
+    it "returns a string with info about the currently selected object" do
+      @new_workspace.select_attribute("C0165NC8LHH")
+      channel_details = @new_workspace.show_details
+      @new_workspace.select_attribute("genevieve.hood")
+      user_details = @new_workspace.show_details
+
+      expect(channel_details).must_be_instance_of String
+      expect(user_details).must_be_instance_of String
+    end
+
+  end
 end
