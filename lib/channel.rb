@@ -1,11 +1,16 @@
+require_relative 'builder'
+
+
 
 class Channel < Builder
 
-  def initialize
+  attr_reader :topic, :member_count
 
-    @topic = ""
-    @member_count = 0
-    super
+  def initialize(id:, name:, topic:, member_count:)
+
+    super(id: id, name: name)
+    @topic = topic
+    @member_count = member_count
 
   end
 end

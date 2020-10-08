@@ -1,4 +1,3 @@
-require 'dotenv'
 
 require_relative 'builder'
 
@@ -6,10 +5,13 @@ SLACK_URL = "https://slack.com/api/users.list"
 
 class User < Builder
 
-  def initialize
+  attr_reader :real_name
 
-    @real_name = nil
-    super
+  def initialize(id:, name:, real_name: )
+
+    super(id: id, name: name)
+    @real_name = real_name
+
   end
 
 end

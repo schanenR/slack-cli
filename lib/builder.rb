@@ -1,15 +1,19 @@
 require 'httparty'
 require 'dotenv'
 
+Dotenv.load
+
 
 
 class Builder
 
   class SlackAPIError < StandardError; end
 
-  def initialize
-    @id = nil
-    @name = nil
+  attr_reader :id, :name
+
+  def initialize(id:, name:)
+    @id = id
+    @name = name
   end
 
   def self.get(url, parameters)
@@ -19,5 +23,33 @@ class Builder
 
     return response
   end
+
+  def self.details
+
+    raise NotImplementedError, "Implement in child class"
+  end
+
+  def self.list_all
+
+    raise NotImplementedError, "Implement in child class"
+  end
+
+  def send_message(message)
+    url = "https://slack.com/api/chat.postMessage"
+    query = {
+        token: ENV["SLACK_TOKEN"],
+        channel: self.id,
+        text: message
+    }
+
+    response = HTTParty.post(url, query: query)
+
+    unless response["ok"]
+      raise SlackAPIError, "Send message failed, error: #{response["error"]}"
+    end
+
+    return response
+  end
+
 
 end

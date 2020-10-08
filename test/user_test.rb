@@ -4,7 +4,7 @@ describe "User class" do
   describe "initialize" do
 
     before do
-      @new_user = User.new
+      @new_user = User.new(id: "123", name: "foo", real_name: "foo bar")
     end
 
     it "is an instance of User" do

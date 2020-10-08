@@ -6,7 +6,7 @@ describe "Channel class" do
   describe "initialize" do
 
     before do
-      @new_channel = Channel.new
+      @new_channel = Channel.new( id: 1234, name: "schanen", topic: "general", member_count: 456)
     end
 
     it "is an instance of Channel" do
