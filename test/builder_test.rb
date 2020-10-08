@@ -57,7 +57,7 @@ describe "Builder class" do
   end
 
   describe "send a message" do
-    it "sends a message to a user"
+    it "sends a message to a user" do
     sample_user = User.new(id: "U017ARD8DBM", name: "genevieve.hood", real_name: "Genevieve Neely")
 
     message = "Hi! What up Genevieve?!"
@@ -81,5 +81,6 @@ describe "Builder class" do
       expect(channel_response["ok"]).must_equal true
       expect(channel_response["message"]["text"]).must_equal message
     end
+  end
   end
 end
