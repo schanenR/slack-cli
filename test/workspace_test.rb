@@ -27,5 +27,38 @@ describe "Workspace class" do
         _(channel).must_be_instance_of Channel
       end
     end
+
+    it "initializes with current_selection = nil" do
+      current_selection = @new_workspace.current_selection
+      expect(current_selection).must_be_nil
+    end
+  end
+
+  describe "select_attribute" do
+    it "updates @current_selection when passed with a valid name or id" do
+      @new_workspace.select_attribute("C0165NC8LHH")
+      channel = @new_workspace.channels.find { |channel| channel.id == "C0165NC8LHH"}
+
+      expect(@new_workspace.current_selection).must_equal channel
+
+      @new_workspace.select_attribute("genevieve.hood")
+      user = @new_workspace.users.find { |user| user.name == "genevieve.hood" }
+
+      expect(@new_workspace.current_selection).must_equal user
+    end
+
+    it "returns a confirmation message when a valid user/group is selected" do
+      message = @new_workspace.select_attribute("C0165NC8LHH")
+      message2 = @new_workspace.select_attribute("genevieve.hood")
+
+      expect(message).must_equal "Selected Channel: fur-babes"
+      expect(message2).must_equal "Selected User: genevieve.hood"
+    end
+
+    it "raises an argument error when called with an invalid name or id" do
+      expect{
+        @new_workspace.select_attribute("12345678901234567890")
+      }.must_raise ArgumentError
+    end
   end
 end
