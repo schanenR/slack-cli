@@ -36,6 +36,17 @@ describe "User class" do
     end
   end
 
+  describe "load_all" do
+    it "returns an array of Class object" do
+      VCR.use_cassette("user_list_all") do
 
+        user_array = User.list_all
 
+        expect(user_array).must_be_instance_of Array
+        user_array.each do |user|
+          _(user).must_be_instance_of User
+        end
+      end
+    end
+  end
 end

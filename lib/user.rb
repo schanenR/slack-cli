@@ -18,4 +18,17 @@ class User < Builder
     return "ID: #{id}\nUsername: #{name}\nReal Name: #{real_name}"
   end
 
+  def self.list_all
+    parameters = {token: ENV["SLACK_TOKEN"]}
+    response = self.get(SLACK_URL, parameters)
+
+    response["members"].map do |user|
+      new(
+          id: user["id"],
+          name: user["name"],
+          real_name: user["profile"]["real_name"]
+      )
+    end
+  end
+
 end
