@@ -3,6 +3,7 @@ require_relative 'user'
 require_relative 'channel'
 
 class Workspace
+  class MessageError < StandardError; end
 
   attr_reader :users, :channels, :current_selection
 
@@ -31,6 +32,18 @@ class Workspace
     return current_selection.details
   end
 
+  def send_message(message)
+    raise ArgumentError, "Message must have at least one character" if message.length == 0
+
+    response = current_selection.send_message(message)
+
+    if response["ok"]
+      return "Message sent to #{current_selection.class}: #{current_selection.name}"
+    else
+      raise MessageError, "Something went wrong - message not sent"
+    end
+  end
+
   private
   def search_names(name)
     selection = []
@@ -47,7 +60,6 @@ class Workspace
       raise ArgumentError, "Multiple matching names"
     end
   end
-
 
 
 end

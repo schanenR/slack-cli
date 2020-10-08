@@ -72,6 +72,32 @@ describe "Workspace class" do
       expect(channel_details).must_be_instance_of String
       expect(user_details).must_be_instance_of String
     end
+  end
 
+  describe "send_message" do
+    it "sends a message to @current_selection" do
+      VCR.use_cassette("chan_msg_workspace") do
+        @new_workspace.select_attribute("C01ABK51G14")
+        message = "Don't forget to take a screen break!!!!"
+        response = @new_workspace.send_message(message)
+        expect(response).must_equal "Message sent to Channel: test-channel2"
+      end
+
+      VCR.use_cassette("user_msg_workspace") do
+        @new_workspace.select_attribute("genevieve.hood")
+        message = "Don't forget to write your lightning talk!"
+        response = @new_workspace.send_message(message)
+        expect(response).must_equal "Message sent to User: genevieve.hood"
+      end
+    end
+
+    it "raises an ArgumentError if a zero-length message is passed" do
+      VCR.use_cassette("user_msg_workspace") do
+        @new_workspace.select_attribute("genevieve.hood")
+        expect{
+          @new_workspace.send_message("")
+        }.must_raise ArgumentError
+      end
+    end
   end
 end
