@@ -14,4 +14,8 @@ class User < Builder
 
   end
 
+  def details
+    return "ID: #{id}\nUsername: #{name}\nReal Name: #{real_name}"
+  end
+
 end
