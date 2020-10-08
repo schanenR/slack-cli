@@ -7,6 +7,8 @@ class Workspace
   def initialize
     @users = []
     @channels = []
-
   end
+
+
+
 end
