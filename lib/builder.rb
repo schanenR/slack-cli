@@ -17,6 +17,8 @@ class Builder
   end
 
   def self.get(url, parameters)
+
+    sleep(2)
     response = HTTParty.get(url, query: parameters)
 
     raise SlackAPIError, "API call failed - error: #{response["error"]}" if !response["ok"] && !response["error"].nil?
@@ -41,6 +43,8 @@ class Builder
         channel: self.id,
         text: message
     }
+
+    sleep(2)
 
     response = HTTParty.post(url, query: query)
 

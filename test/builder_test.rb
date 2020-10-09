@@ -16,7 +16,7 @@ describe "Builder class" do
   describe "get" do
 
 
-    it "Returns an Slack API get object" do
+    it "Returns expected response from users.list query" do
       VCR.use_cassette("user_query") do
         url = "https://slack.com/api/users.list"
         response = Builder.get(url, {token: ENV["SLACK_TOKEN"]})
@@ -27,7 +27,7 @@ describe "Builder class" do
       end
     end
 
-    it "Returns a Slack API object for channel query" do
+    it "Returns expected response from conversations.list query" do
       VCR.use_cassette("channel_query") do
         url = "https://slack.com/api/conversations.list"
         response = Builder.get(url, {token: ENV["SLACK_TOKEN"]})

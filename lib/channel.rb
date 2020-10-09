@@ -17,7 +17,7 @@ class Channel < Builder
   end
 
   def details
-    return "ID: #{id}\nName: #{name}\nTopic:#{topic}\n# Members #{member_count}"
+    return "ID: #{id}\nName: #{name}\nTopic:#{topic}\nNumber of Members: #{member_count}"
   end
 
   def self.list_all
