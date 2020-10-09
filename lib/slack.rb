@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 #
+require 'tabulo'
 require 'table_print'
 require_relative 'workspace'
 
@@ -14,9 +15,12 @@ VALID_ACTIONS = [
 ].freeze
 
 def main
-  puts "Welcome to the Ada Slack CLI!"
+
+  tp.set :max_width, 120
+
+  puts "\nWelcome to the Ada Slack CLI!\n"
   workspace = Workspace.new
-  puts "#{workspace.users.count} Users loaded!"
+  puts "\n#{workspace.users.count} Users loaded!"
   puts "#{workspace.channels.count} Channels loaded!"
 
   input = request_input
@@ -24,9 +28,23 @@ def main
 
   until input == "quit"
     if input == "list users"
-      tp workspace.users, :name, :id, :real_name
+      table = Tabulo::Table.new(workspace.users, title: "USER LIST")
+
+      table.add_column("ID", &:id)
+      table.add_column("NAME", &:name)
+      table.add_column("REAL NAME", &:real_name)
+
+      puts table.pack
     elsif input == "list channels"
-      tp workspace.channels, :name, :id, :topic, :member_count
+      table = Tabulo::Table.new(workspace.channels, title: "CHANNEL LIST")
+
+      table.add_column("ID", &:id)
+      table.add_column("NAME", &:name)
+      table.add_column("MEMBER COUNT", &:member_count)
+      table.add_column("CHANNEL TOPIC", &:topic)
+
+      table.pack(max_table_width: 80)
+      puts table
     elsif input == "select channel" || input == "select user"
       makes_selection(workspace)
     elsif input == "details"
@@ -41,11 +59,11 @@ def main
 end
 
 def request_input
-  puts "Please select an action:"
+  puts "\n  Please select an action:\n\n"
   VALID_ACTIONS.each_with_index do |action, index|
-    puts "#{index + 1}. #{action}"
+    puts "  #{index + 1}. #{action}"
   end
-
+  print "\n===> "
   selection = gets.chomp.downcase
   validate_input(selection)
 end
@@ -85,7 +103,8 @@ def gets_details(workspace)
 end
 
 def makes_selection(workspace)
-  puts "Please enter an ID or name:"
+  puts "\nPlease enter an ID or name:"
+  print "\n===> "
   identifier = gets.chomp
   begin
     response = workspace.select_attribute(identifier)

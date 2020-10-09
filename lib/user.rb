@@ -15,7 +15,7 @@ class User < Builder
   end
 
   def details
-    return "ID: #{id}\nUsername: #{name}\nReal Name: #{real_name}"
+    return "\n  ID: #{id}\n  Username: #{name}\n  Real Name: #{real_name}"
   end
 
   def self.list_all
