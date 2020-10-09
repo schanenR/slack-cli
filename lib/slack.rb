@@ -15,7 +15,8 @@ def main
     elsif list_options == "list channels"
       puts workspace.channels
       list_options = user_options
-    else
+    elsif list_options == "select user"
+      puts workspace.select_attribute()
       list_options = user_options
     end
   end
